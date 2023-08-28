@@ -1,9 +1,10 @@
 package com.jmarcosfmg.rickandmorty.application.utils;
 
-import java.util.logging.Logger;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
 
 public abstract class LogUtils {
 
-    private Logger log = Logger.getLogger(this.getClass().getSimpleName());
+    protected Logger log = new LoggerContext().getLogger(this.getClass().getSimpleName());
 
 }

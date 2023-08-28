@@ -23,6 +23,13 @@ public class Location {
 
     private Date createdAt;
 
+
+    public Location(String name, String dimension, List<Character> residents){
+        this.name = name;
+        this.dimension = dimension;
+        this.residents = residents;
+    }
+
     
     public Location update(Location location){
 

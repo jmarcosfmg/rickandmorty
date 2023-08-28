@@ -12,11 +12,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.jmarcosfmg.rickandmorty.application.entity.character.CharacterTestUtils;
 
-@SpringBootTest
 public class LocationTests {
 
     private Location earth = LocationTestUtils.getEarth();

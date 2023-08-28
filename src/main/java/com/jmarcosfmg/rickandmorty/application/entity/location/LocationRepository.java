@@ -4,9 +4,7 @@ import java.util.List;
 
 public interface LocationRepository {
 
-    List<Location> getLocations();
-
-    Location getLocation(Integer id); 
+    List<Location> getLocation(List<Integer> id); 
 
     Location updateLocation(Location location);
     

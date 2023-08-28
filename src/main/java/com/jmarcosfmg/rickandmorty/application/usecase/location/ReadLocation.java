@@ -6,6 +6,6 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocation
 
 public interface ReadLocation {
 
-    public List<ReadLocationOutput> execute(Integer... id);
+    public List<ReadLocationOutput> execute(List<Integer> ids);
 
 }

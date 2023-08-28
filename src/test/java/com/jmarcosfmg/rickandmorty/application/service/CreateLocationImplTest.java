@@ -41,11 +41,9 @@ public class CreateLocationImplTest {
     @InjectMocks
     private CreateLocationImpl service;
 
-    private Location earth = LocationTestUtils.getEarth();
-    
-    private CreateLocationInput input = new CreateLocationInput(earth.getName(),earth.getDimension(), earth.getResidents().stream().map(r -> r.getId()).toList());
-
     private List<Character> characters ;
+    private Location earth = LocationTestUtils.getEarth();
+    private CreateLocationInput input = new CreateLocationInput(earth.getName(),earth.getDimension(), earth.getResidents().stream().map(r -> r.getId()).toList());
 
     @BeforeEach
     void setUp(){
@@ -56,7 +54,7 @@ public class CreateLocationImplTest {
     @Test
     public void shouldCreateNewLocation(){
 
-        when(characterService.getCharacters()).thenReturn(characters);
+        when(characterService.getCharacters(input.residents())).thenReturn(characters);
         when(repository.createLocation(any())).thenReturn(earth);
         
         CreateLocationOutput response = service.execute(input);
@@ -72,7 +70,7 @@ public class CreateLocationImplTest {
     @Test
     public void shouldParseIntegrationExceptions() {
 
-        when(characterService.getCharacters()).thenReturn(characters);
+        when(characterService.getCharacters(input.residents())).thenReturn(characters);
         when(repository.createLocation(any())).thenThrow(new DataRetrievalFailureException("Error"));
         
         RuntimeException response = assertThrows(RuntimeException.class, () -> {service.execute(input);}, "Should have returned exception");

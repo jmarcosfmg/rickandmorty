@@ -3,12 +3,14 @@ package com.jmarcosfmg.rickandmorty.application.service;
 import java.util.List;
 
 import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.ReadLocation;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.UpdateLocation;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.UpdateLocationInput;
 
-public class UpdateLocationImpl implements ReadLocation {
+public class UpdateLocationImpl implements UpdateLocation {
+
 
     @Override
-    public List<Location> execute(Integer... id) {
+    public List<Location> execute(UpdateLocationInput... location) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }

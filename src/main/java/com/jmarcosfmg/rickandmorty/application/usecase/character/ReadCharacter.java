@@ -6,6 +6,6 @@ import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.ReadCharact
 
 public interface ReadCharacter {
 
-    public List<ReadCharacterOutput> execute(Integer... id);
+    public List<ReadCharacterOutput> execute(List<Integer> id);
     
 }

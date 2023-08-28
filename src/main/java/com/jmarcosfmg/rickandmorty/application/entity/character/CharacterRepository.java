@@ -4,10 +4,6 @@ import java.util.List;
 
 public interface CharacterRepository {
 
-    Character getCharacter(Integer id); 
-    
-    List<Character> getCharacters();
-    
     List<Character> getCharacters(List<Integer> id); 
     
     Character updateCharacter(Character character);
@@ -16,6 +12,6 @@ public interface CharacterRepository {
 
     Character createCharacter(Character character);
 
-    void deleteCharacter(Integer id);  
+    void deleteCharacter(List<Integer> id);  
     
 }

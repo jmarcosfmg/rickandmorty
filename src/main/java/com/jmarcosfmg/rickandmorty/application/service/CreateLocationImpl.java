@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
 import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
@@ -14,6 +15,7 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocati
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 
+@Service
 public class CreateLocationImpl extends LogUtils implements CreateLocation{
 
     @Autowired
@@ -27,7 +29,7 @@ public class CreateLocationImpl extends LogUtils implements CreateLocation{
         log.info("Starting location creation", createLocationInput);
         
         List<Character> residents = (createLocationInput.residents() == null)? 
-             new ArrayList<>() : readCharacterService.getCharacters(createLocationInput.residents().toArray(Integer[]::new));
+             new ArrayList<>() : readCharacterService.getCharacters(createLocationInput.residents());
         
             Location createdLocation;
             try{

@@ -3,8 +3,6 @@ package com.jmarcosfmg.rickandmorty.application.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
 import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
@@ -41,7 +38,7 @@ public class ReadLocationImplTest {
 
         when(repository.getLocation(List.of(earth.getId(), secondEarth.getId()))).thenReturn(locations);
 
-        List<ReadLocationOutput> response = service.execute(earth.getId(), secondEarth.getId());
+        List<ReadLocationOutput> response = service.execute(List.of(earth.getId(), secondEarth.getId()));
 
         assertEquals("Should have returned both locations", locations.size(), response.size());
     }
@@ -51,7 +48,7 @@ public class ReadLocationImplTest {
 
         when(repository.getLocation(List.of(earth.getId()))).thenReturn(List.of());
 
-        List<ReadLocationOutput> response = service.execute(earth.getId());
+        List<ReadLocationOutput> response = service.execute(List.of(earth.getId()));
 
         assertEquals("Should have returned no location", 0, response.size());
     }
@@ -61,7 +58,7 @@ public class ReadLocationImplTest {
 
         when(repository.getLocation(List.of(earth.getId(), secondEarth.getId()))).thenReturn(locations);
         
-        RuntimeException response = assertThrows(RuntimeException.class, () -> {service.execute(earth.getId());}, "Should have returned exception");
+        RuntimeException response = assertThrows(RuntimeException.class, () -> {service.execute(List.of(earth.getId()));}, "Should have returned exception");
 
         assertTrue("Should explain exception", response.getMessage().contains("Location"));
     }

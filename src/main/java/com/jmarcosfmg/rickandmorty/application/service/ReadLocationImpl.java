@@ -19,24 +19,24 @@ public class ReadLocationImpl extends LogUtils implements ReadLocation{
     LocationRepository repository;
 
     @Override
-    public List<ReadLocationOutput> execute(Integer... id) {
+    public List<ReadLocationOutput> execute(List<Integer> id) {
         
         log.info("Starting to read locations: ", id);
 
         List<Location> response = this.getLocations(id);
 
-        log.info("Successfully read {0} characters: ".formatted(response.size()), id);
+        log.info("Successfully read {0} characters: ", response.size(), id);
 
         return response.stream().parallel().map(this::toReadLocationOutput).toList();
     }
 
 
-    protected List<Location> getLocations(Integer... id) {
+    protected List<Location> getLocations(List<Integer> id) {
         log.info("Fetching locations on database: ", id);
 
-        List<Location> response = repository.getLocation(Arrays.asList(id));
+        List<Location> response = repository.getLocation(id);
 
-        log.info("Successfully fetched {0} locations: ".formatted(response.size()), id);
+        log.info("Successfully fetched {0} locations: ", response.size(), id);
 
         return response;
     }

@@ -10,5 +10,5 @@ public interface LocationRepository {
     
     Location createLocation(Location location);
 
-    void deleteLocation(Integer id);    
+    void deleteLocation(List<Integer> id);    
 }

@@ -1,6 +1,5 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class ReadLocationImpl extends LogUtils implements ReadLocation{
             location.getName(),
             location.getDimension(),
             location.getResidents().stream().map(r -> r.getId()).toList(),
-            location.getCreatedAt()
+            location.getCreationDate()
         );
     }
 }

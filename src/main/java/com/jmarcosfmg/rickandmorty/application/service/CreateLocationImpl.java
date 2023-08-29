@@ -13,6 +13,7 @@ import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepositor
 import com.jmarcosfmg.rickandmorty.application.usecase.location.CreateLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationInput;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.LocationMapper;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 
 @Service
@@ -24,9 +25,12 @@ public class CreateLocationImpl extends LogUtils implements CreateLocation{
     @Autowired
     ReadCharacterImpl readCharacterService;
 
+    @Autowired
+    LocationMapper mapper;
+
     public CreateLocationOutput execute(CreateLocationInput createLocationInput) {
 
-        log.info("Starting location creation", createLocationInput);
+        log.info("Starting location creation - {}", createLocationInput);
         
         List<Character> residents = (createLocationInput.residents() == null)? 
              new ArrayList<>() : readCharacterService.getCharacters(createLocationInput.residents());
@@ -39,14 +43,14 @@ public class CreateLocationImpl extends LogUtils implements CreateLocation{
                 throw new DataAccessException("Location could not be created"){};
             }
         
-        log.info("Successfully created location", createLocationInput);
+        log.info("Successfully created location - {}", createdLocation);
 
         return new CreateLocationOutput(
             createdLocation.getId(), 
             createdLocation.getName(), 
             createdLocation.getDimension(), 
             createdLocation.getResidents().stream().map(r -> r.getId()).toList(), 
-            createdLocation.getCreatedAt()
+            createdLocation.getCreationDate()
             );
     }
     

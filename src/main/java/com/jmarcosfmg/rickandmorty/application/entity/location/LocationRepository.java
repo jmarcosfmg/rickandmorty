@@ -6,7 +6,7 @@ public interface LocationRepository {
 
     List<Location> getLocation(List<Integer> id); 
 
-    Location updateLocation(Location location);
+    List<Location> updateLocation(List<Location> location);
     
     Location createLocation(Location location);
 

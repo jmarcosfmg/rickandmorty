@@ -1,13 +1,34 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import com.jmarcosfmg.rickandmorty.application.usecase.location.DeleteLocation;
+import java.util.Arrays;
+import java.util.List;
 
-public class DeleteLocationImpl implements DeleteLocation {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+
+import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.DeleteLocation;
+import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+
+@Service
+public class DeleteLocationImpl extends LogUtils implements DeleteLocation {
+
+    @Autowired
+    private LocationRepository repository;
 
     @Override
-    public void execute(Integer... id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+    public void execute(List<Integer> id) {
+        log.info("Starting process to delete location", id);
+
+        try{
+            repository.deleteLocation(id);
+        }catch(Exception e){
+            log.error("Failed to delete locations", id);
+            throw new DataAccessException("Location could not be deleted: "+id){};
+        }
+        log.info("Succseffuly deleted location", id);
+
     }
     
 }

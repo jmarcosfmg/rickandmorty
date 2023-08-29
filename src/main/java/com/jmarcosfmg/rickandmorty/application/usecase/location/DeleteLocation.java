@@ -1,7 +1,9 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.location;
 
+import java.util.List;
+
 public interface DeleteLocation {
 
-    public void execute(Integer... id);
+    public void execute(List<Integer> id);
 
 }

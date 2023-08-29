@@ -2,9 +2,16 @@ package com.jmarcosfmg.rickandmorty.application.entity.location;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface LocationRepository {
 
-    List<Location> getLocation(List<Integer> id); 
+    Page<Location> getLocationsById(List<Integer> id, Pageable pageable); 
+
+    List<Location> getLocationsById(List<Integer> id); 
+    
+    Page<Location> getLocations(Pageable pageable); 
 
     List<Location> updateLocation(List<Location> location);
     

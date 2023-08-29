@@ -1,6 +1,5 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,15 @@ public class DeleteLocationImpl extends LogUtils implements DeleteLocation {
 
     @Override
     public void execute(List<Integer> id) {
-        log.info("Starting process to delete location", id);
+        log.info("Starting process to delete location - {}", id);
 
         try{
             repository.deleteLocation(id);
         }catch(Exception e){
-            log.error("Failed to delete locations", id);
+            log.error("Failed to delete locations - {}", id);
             throw new DataAccessException("Location could not be deleted: "+id){};
         }
-        log.info("Succseffuly deleted location", id);
+        log.info("Succseffuly deleted location - {}", id);
 
     }
     

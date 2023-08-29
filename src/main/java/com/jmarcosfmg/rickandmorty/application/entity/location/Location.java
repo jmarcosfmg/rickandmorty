@@ -8,7 +8,9 @@ import java.util.Map;
 import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class Location {
 

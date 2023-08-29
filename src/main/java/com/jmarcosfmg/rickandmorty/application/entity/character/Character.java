@@ -8,7 +8,9 @@ import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class Character {

@@ -40,7 +40,7 @@ public class UpdateLocationImpl extends LogUtils implements UpdateLocation {
 
         Map<Integer, Location> fetchedLocations = new HashMap<>();
 
-        locationRepository.getLocation(locationIds)
+        locationRepository.getLocationsById(locationIds)
             .forEach(l -> fetchedLocations.put(l.getId(), l));
         
         log.info("Found {} locations to update", fetchedLocations.size());

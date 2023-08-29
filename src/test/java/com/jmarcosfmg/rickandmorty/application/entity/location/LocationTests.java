@@ -37,7 +37,7 @@ public class LocationTests {
 
         assertAll(
             () -> {assertEquals("Id should not have been updated", earth.getId(), response.getId());},
-            () -> {assertEquals("Created date should not have been updated", earth.getCreatedAt(), response.getCreatedAt());},
+            () -> {assertEquals("Created date should not have been updated", earth.getCreationDate(), response.getCreationDate());},
             () -> {assertEquals("Name should have been updated", updatedLocation.getName(), response.getName());},
             () -> {assertEquals("Dimension should have been updated", updatedLocation.getDimension(), response.getDimension());},
             () -> {assertEquals("Residents list should not have been replaced", earth.getResidents(), response.getResidents());},

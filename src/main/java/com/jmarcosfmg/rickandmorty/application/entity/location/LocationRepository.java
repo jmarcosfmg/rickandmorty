@@ -4,13 +4,11 @@ import java.util.List;
 
 public interface LocationRepository {
 
-    List<Location> getLocations();
+    List<Location> getLocation(List<Integer> id); 
 
-    Location getLocation(Integer id); 
-
-    Location updateLocation(Location location);
+    List<Location> updateLocation(List<Location> location);
     
     Location createLocation(Location location);
 
-    void deleteLocation(Integer id);    
+    void deleteLocation(List<Integer> id);    
 }

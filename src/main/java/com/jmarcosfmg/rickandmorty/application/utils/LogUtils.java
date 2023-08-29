@@ -1,9 +1,10 @@
 package com.jmarcosfmg.rickandmorty.application.utils;
 
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import  org.slf4j.Logger;
 
 public abstract class LogUtils {
 
-    private Logger log = Logger.getLogger(this.getClass().getSimpleName());
+    protected Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
 }

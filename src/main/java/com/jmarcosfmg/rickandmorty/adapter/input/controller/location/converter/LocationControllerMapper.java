@@ -7,7 +7,7 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.*;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ControllerMapper {
+public interface LocationControllerMapper {
     
     public CreateLocationInput toInput(CreateLocationRequest request);
 

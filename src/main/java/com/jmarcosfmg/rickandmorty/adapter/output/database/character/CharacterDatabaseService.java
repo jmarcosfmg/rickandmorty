@@ -5,6 +5,8 @@ import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CharacterMapper;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,16 +18,36 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
     private CharacterDatabaseRepository repository;
 
     @Autowired
-    private CharacterMapper mapper;
+    private CharacterEntityMapper mapper;
  
     @Override
     public List<Character> getCharacters(List<Integer> id) {
         log.info("Fetching Character filtered by id from database - {}", id);
         
-        List<CharacterEntity> results = repository.findAllById(id);
+        List<CharacterEntity> results = repository.findAllByIdIn(id);
         
         log.info("Successfully fetched Character  filtered by id from database - {}", id);
         return results.parallelStream().map(character -> mapper.toCharacter(character)).toList();
+    }
+
+    @Override
+    public Page<Character> getCharacters(List<Integer> id, Pageable pageable) {
+        log.info("Fetching Character page filtered by id={} - Page={}", id, pageable);
+
+        Page<CharacterEntity> results = repository.findAllByIdIn(id, pageable);
+
+        log.info("Successfully fetched Character page filtered by id={} - Page={}", id, pageable);
+        return results.map(mapper::toCharacter);
+    }
+
+    @Override
+    public Page<Character> getCharacters(Pageable pageable) {
+        log.info("Fetching Character page {}", pageable);
+
+        Page<CharacterEntity> results = repository.findAll(pageable);
+
+        log.info("Successfully fetched Character page {}",pageable);
+        return results.map(mapper::toCharacter);
     }
 
     @Override
@@ -33,8 +55,8 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
         log.info("Updating database Character - {}", character);
 
         List<Character> entities = repository.saveAll(
-                character.parallelStream().map(l -> mapper.toEntity(l)).toList()
-            ).parallelStream().map(entity -> mapper.toCharacter(entity)).toList();
+                character.parallelStream().map(mapper::toEntity).toList()
+            ).parallelStream().map(mapper::toCharacter).toList();
         
         log.info("Successfully updated database Character - {}", entities);
         return entities;
@@ -52,10 +74,10 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
 
     @Override
     public void deleteCharacter(List<Integer> id) {
-        log.info("Deleting Character from database - {}", id);
+        log.info("Deleting Character(s) from database - id=[{}]", id);
 
         repository.deleteAllById(id);
-        log.info("Succ deleted Character from database - {}", id);
+        log.info("Successfully deleted Character(s) from database - id=[{}]", id);
     }
 
 

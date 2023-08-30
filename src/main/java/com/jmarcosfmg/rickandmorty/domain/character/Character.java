@@ -3,15 +3,13 @@ package com.jmarcosfmg.rickandmorty.domain.character;
 import com.jmarcosfmg.rickandmorty.domain.character.enums.Gender;
 import com.jmarcosfmg.rickandmorty.domain.character.enums.Status;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 public class Character {
 
     private Integer id;
@@ -25,7 +23,7 @@ public class Character {
     private Gender gender;
 
     private Location origin;
-    
+
     private Location location;
 
     private LocalDate createdAt;
@@ -53,13 +51,6 @@ public class Character {
 
         setLocation(character.getLocation());
         
-        return this;
-    }
-
-    public Character setLocation(Location location){
-        if (location != null)
-            this.location = location;
-
         return this;
     }
 

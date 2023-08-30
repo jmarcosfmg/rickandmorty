@@ -27,7 +27,7 @@ public class ReadLocationImpl extends LogUtils implements ReadLocation{
 
         Page<Location> response = (id.isEmpty())? repository.getLocations(pageable) : repository.getLocationsById(id, pageable);
 
-        log.info("Successfully read {0} characters - {}", response.getSize(), id);
+        log.info("Successfully read {} characters - {}", response.getSize(), id);
 
         return response.map(this::toReadLocationOutput);
     }    

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UpdateCharacter {
 
-    public List<UpdateCharacterOutput> execute(UpdateCharacterInput... character);
+    public List<UpdateCharacterOutput> execute(List<UpdateCharacterInput> character);
     
 }

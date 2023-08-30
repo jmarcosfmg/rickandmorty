@@ -1,6 +1,6 @@
 package com.jmarcosfmg.rickandmorty.adapter.input.controller.location;
 
-import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter.ControllerMapper;
+import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter.LocationControllerMapper;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.CreateLocationRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.LocationInfoResponse;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.UpdateLocationRequest;
@@ -12,6 +12,7 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocati
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,8 +43,7 @@ public class LocationController extends LogUtils {
     @Autowired
     private ReadLocation readLocationUseCase;
 
-    @Autowired
-    private ControllerMapper mapper;
+    private LocationControllerMapper mapper = Mappers.getMapper(LocationControllerMapper.class);
     
     @PostMapping
     public LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request){

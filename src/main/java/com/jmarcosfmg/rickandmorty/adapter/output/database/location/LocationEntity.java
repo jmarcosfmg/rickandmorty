@@ -30,7 +30,7 @@ public class LocationEntity {
 
     private String dimension;
 
-    @OneToMany
+    @OneToMany(mappedBy = "location")
     private List<CharacterEntity> residents;    
 
     @CreatedDate

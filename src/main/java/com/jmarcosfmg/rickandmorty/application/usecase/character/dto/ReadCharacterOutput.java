@@ -1,5 +1,7 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character.dto;
 
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
+
 import java.time.LocalDate;
 
 public record ReadCharacterOutput(
@@ -8,8 +10,8 @@ public record ReadCharacterOutput(
     String status,
     String species,
     String gender,
-    Integer origin,
-    Integer location,
+    CharacterLocationOutput origin,
+    CharacterLocationOutput location,
     LocalDate creationDate
 ) {
 

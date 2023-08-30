@@ -1,5 +1,6 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character.dto;
 
+
 public record CreateCharacterInput(
     String name,
     String status,

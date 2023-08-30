@@ -1,16 +1,13 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.character;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
 import com.jmarcosfmg.rickandmorty.application.entity.character.CharacterRepository;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CharacterMapper;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class CharacterDatabaseService extends LogUtils implements CharacterRepository {

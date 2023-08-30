@@ -1,15 +1,10 @@
 package com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter;
 
-import org.mapstruct.Mapper;
-
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.CreateLocationRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.LocationInfoResponse;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.UpdateLocationRequest;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationInput;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.UpdateLocationInput;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.UpdateLocationOutput;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.*;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ControllerMapper {

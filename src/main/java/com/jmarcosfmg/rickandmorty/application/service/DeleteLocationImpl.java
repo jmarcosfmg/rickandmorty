@@ -1,14 +1,13 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-
 import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
+import com.jmarcosfmg.rickandmorty.application.exception.DatabaseIntegrationException;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.DeleteLocation;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DeleteLocationImpl extends LogUtils implements DeleteLocation {
@@ -24,9 +23,10 @@ public class DeleteLocationImpl extends LogUtils implements DeleteLocation {
             repository.deleteLocation(id);
         }catch(Exception e){
             log.error("Failed to delete locations - {}", id);
-            throw new DataAccessException("Location could not be deleted: "+id){};
+            throw new DatabaseIntegrationException("Location could not be deleted: " + id) {
+            };
         }
-        log.info("Succseffuly deleted location - {}", id);
+        log.info("Successfully deleted location - {}", id);
 
     }
     

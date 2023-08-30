@@ -1,17 +1,18 @@
 package com.jmarcosfmg.rickandmorty.application.entity.location;
 
+import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 @NoArgsConstructor
 @Getter
+@Setter
 public class Location {
 
     private Integer id;
@@ -42,7 +43,7 @@ public class Location {
         return List.copyOf(this.residents.values());
     }
 
-    private void setResidents(List<Character> residents){
+    public void setResidents(List<Character> residents) {
         Map<Integer, Character> newResidents = new HashMap<>();
         residents.forEach(r -> newResidents.put(r.getId(), r));
         this.updateResidents(newResidents);
@@ -82,5 +83,27 @@ public class Location {
         this.residents.forEach((i, c) -> { if(!newResidents.containsKey(i)) c.setLocation(null);});
         newResidents.forEach((i, c) -> c.setLocation(this));
         this.residents = newResidents;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Location other = (Location) obj;
+        if (id == null) {
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 }

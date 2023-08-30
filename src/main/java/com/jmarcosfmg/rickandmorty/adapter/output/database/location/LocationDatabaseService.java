@@ -1,15 +1,14 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
-import java.util.List;
-
+import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
+import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
+import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
-import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
-import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import java.util.List;
 
 @Repository
 public class LocationDatabaseService extends LogUtils implements LocationRepository {

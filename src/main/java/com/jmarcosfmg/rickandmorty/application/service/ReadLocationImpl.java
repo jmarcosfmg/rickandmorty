@@ -1,17 +1,16 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
 import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.ReadLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReadLocationImpl extends LogUtils implements ReadLocation{

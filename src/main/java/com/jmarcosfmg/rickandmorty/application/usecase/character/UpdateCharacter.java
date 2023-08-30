@@ -1,9 +1,9 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character;
 
-import java.util.List;
-
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.UpdateCharacterInput;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.UpdateCharacterOutput;
+
+import java.util.List;
 
 public interface UpdateCharacter {
 

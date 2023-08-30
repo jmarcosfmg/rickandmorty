@@ -1,27 +1,22 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.data.annotation.CreatedDate;
-
 import com.jmarcosfmg.rickandmorty.adapter.output.database.character.CharacterEntity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "locations")
+@EntityListeners(AuditingEntityListener.class)
 public class LocationEntity {
 
     @Id

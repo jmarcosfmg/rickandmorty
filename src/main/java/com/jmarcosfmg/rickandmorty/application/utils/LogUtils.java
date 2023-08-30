@@ -1,7 +1,7 @@
 package com.jmarcosfmg.rickandmorty.application.utils;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import  org.slf4j.Logger;
 
 public abstract class LogUtils {
 

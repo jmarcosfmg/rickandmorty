@@ -1,11 +1,9 @@
 package com.jmarcosfmg.rickandmorty.application.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
+import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
+import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
+import com.jmarcosfmg.rickandmorty.application.entity.location.LocationTestUtils;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,12 +12,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 
-import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
-import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
-import com.jmarcosfmg.rickandmorty.application.entity.location.LocationTestUtils;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
+import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ReadLocationImplTest {

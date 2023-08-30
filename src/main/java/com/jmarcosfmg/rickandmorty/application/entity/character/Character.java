@@ -1,14 +1,13 @@
 package com.jmarcosfmg.rickandmorty.application.entity.character;
 
-import java.util.Date;
-
 import com.jmarcosfmg.rickandmorty.application.entity.character.enums.Gender;
 import com.jmarcosfmg.rickandmorty.application.entity.character.enums.Status;
 import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor

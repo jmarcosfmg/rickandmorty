@@ -1,10 +1,10 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface LocationDatabaseRepository extends JpaRepository<LocationEntity, Integer> {
 

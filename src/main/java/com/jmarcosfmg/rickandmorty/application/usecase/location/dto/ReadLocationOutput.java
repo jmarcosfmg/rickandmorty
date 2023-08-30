@@ -1,6 +1,6 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.location.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public record ReadLocationOutput(
@@ -8,7 +8,7 @@ public record ReadLocationOutput(
     String name,
     String dimension,
     List<Integer> residents,
-    Date creationDate
+    LocalDate creationDate
 ) {
     
 }

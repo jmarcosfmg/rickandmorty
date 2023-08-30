@@ -1,7 +1,7 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.location.dto;
 
-import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
-import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
+import com.jmarcosfmg.rickandmorty.domain.character.Character;
+import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import org.mapstruct.Mapper;
 
 import java.util.List;

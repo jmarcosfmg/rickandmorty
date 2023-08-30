@@ -18,4 +18,5 @@ public interface ControllerMapper {
     public LocationInfoResponse toResponse(ReadLocationOutput output);
 
     public LocationInfoResponse toResponse(UpdateLocationOutput output);
+
 }

@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/location")
 public class LocationController extends LogUtils {
@@ -49,7 +52,8 @@ public class LocationController extends LogUtils {
         CreateLocationOutput output = createLocationUseCase.execute(this.mapper.toInput(request));
         
         log.info("Finished processing a create location request - {}", request);
-        return this.mapper.toResponse(output);
+
+        return addSelfUrl(this.mapper.toResponse(output));
     }
 
     @PutMapping
@@ -57,19 +61,21 @@ public class LocationController extends LogUtils {
         log.info("Starting to process an update location request - {}", request);
     
         List<LocationInfoResponse> output = updateLocationUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
-            .parallelStream().map(o -> this.mapper.toResponse(o)).toList();
+                .parallelStream().map(o -> this.addSelfUrl(this.mapper.toResponse(o))).toList();
+
         log.info("Finished processing an update location request - {}", request);
         return ResponseEntity.ok().body((output.size() == 1)? output.get(0) : output);
     }
     
     @GetMapping
     public Page<LocationInfoResponse> getLocation(
-        @RequestParam(required = false) List<Integer> id, 
+            @RequestParam(required = false) List<Integer> id,
         @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
         log.info("Starting to process a get location request - {}", id);
 
-        Page<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id, pageable).map(o -> this.mapper.toResponse(o));
+        Page<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id, pageable)
+                .map(o -> addSelfUrl(this.mapper.toResponse(o)));
 
         log.info("Finished processing a get location request - {}", id);
         return output;
@@ -82,5 +88,11 @@ public class LocationController extends LogUtils {
     
         deleteLocationUseCase.execute(ids);
         log.info("Finished processing a delete location request - {}", ids);
+    }
+
+    private LocationInfoResponse addSelfUrl(LocationInfoResponse response) {
+        response.setUrl(linkTo(methodOn(LocationController.class)
+                .getLocation(List.of(response.getId()), null)).toString());
+        return response;
     }
 }

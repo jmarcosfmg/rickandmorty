@@ -1,6 +1,7 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
 import com.jmarcosfmg.rickandmorty.adapter.output.database.character.CharacterEntity;
+import com.jmarcosfmg.rickandmorty.application.config.Constants;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -31,5 +34,5 @@ public class LocationEntity {
     private List<CharacterEntity> residents;    
 
     @CreatedDate
-    private Date creationDate;
+    private LocalDate creationDate = ZonedDateTime.now(ZoneId.of(Constants.TIMEZONE)).toLocalDate();
 }

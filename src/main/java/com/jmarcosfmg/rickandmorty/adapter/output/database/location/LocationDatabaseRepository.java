@@ -9,6 +9,9 @@ import java.util.List;
 public interface LocationDatabaseRepository extends JpaRepository<LocationEntity, Integer> {
 
     Page<LocationEntity> findAllByIdIn(List<Integer> id, Pageable pageable);
+
+    List<LocationEntity> findAllByIdIn(List<Integer> id);
+
     
 
 }

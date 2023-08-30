@@ -1,7 +1,7 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
 import com.jmarcosfmg.rickandmorty.adapter.output.database.character.CharacterEntityMapper;
-import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
+import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import org.mapstruct.Mapper;
 
 

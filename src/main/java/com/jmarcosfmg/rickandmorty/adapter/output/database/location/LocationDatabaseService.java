@@ -1,7 +1,7 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
-import com.jmarcosfmg.rickandmorty.application.entity.location.Location;
-import com.jmarcosfmg.rickandmorty.application.entity.location.LocationRepository;
+import com.jmarcosfmg.rickandmorty.domain.location.Location;
+import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,11 +32,11 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
     @Override
     public List<Location> getLocationsById(List<Integer> id) {
         log.info("Fetching Location filtered by id from database - {}", id);
-        
-        List<LocationEntity> results = repository.findAllById(id);
-        
-        log.info("Successfully fetched Location  filtered by id from database - {}", id);
-        return results.parallelStream().map(location -> mapper.toLocation(location)).toList();
+
+        List<LocationEntity> results = repository.findAllByIdIn(id);
+
+        log.info("Successfully fetched Location filtered by id from database - {}", id);
+        return results.stream().map(location -> mapper.toLocation(location)).toList();
     }
     
 
@@ -77,7 +77,7 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
         log.info("Deleting Location from database - {}", id);
 
         repository.deleteAllById(id);
-        log.info("Succ deleted Location from database - {}", id);
+        log.info("Successfully deleted Location from database - {}", id);
     }
 
 

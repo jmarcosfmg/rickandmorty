@@ -1,19 +1,17 @@
 package com.jmarcosfmg.rickandmorty.application.entity.location;
 
 import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
+import com.jmarcosfmg.rickandmorty.application.entity.character.CharacterTestUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.jmarcosfmg.rickandmorty.application.entity.character.CharacterTestUtils;
 
 public class LocationTests {
 

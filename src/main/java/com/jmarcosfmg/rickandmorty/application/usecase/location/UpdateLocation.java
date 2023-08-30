@@ -1,9 +1,9 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.location;
 
-import java.util.List;
-
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.UpdateLocationInput;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.UpdateLocationOutput;
+
+import java.util.List;
 
 public interface UpdateLocation {
 

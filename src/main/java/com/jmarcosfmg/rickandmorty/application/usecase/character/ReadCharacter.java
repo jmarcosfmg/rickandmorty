@@ -1,8 +1,8 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character;
 
-import java.util.List;
-
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.ReadCharacterOutput;
+
+import java.util.List;
 
 public interface ReadCharacter {
 

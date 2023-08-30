@@ -1,19 +1,5 @@
 package com.jmarcosfmg.rickandmorty.adapter.input.controller.location;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter.ControllerMapper;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.CreateLocationRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.LocationInfoResponse;
@@ -24,9 +10,18 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.ReadLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.UpdateLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/location")
@@ -68,14 +63,16 @@ public class LocationController extends LogUtils {
     }
     
     @GetMapping
-    public ResponseEntity<?> getLocation(@RequestParam(required = false) List<Integer> id) {
+    public Page<LocationInfoResponse> getLocation(
+        @RequestParam(required = false) List<Integer> id, 
+        @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
         log.info("Starting to process a get location request - {}", id);
 
-        List<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id)
-            .parallelStream().map(o -> this.mapper.toResponse(o)).toList();
+        Page<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id, pageable).map(o -> this.mapper.toResponse(o));
 
         log.info("Finished processing a get location request - {}", id);
-        return ResponseEntity.ok().body((output.size() == 1)? output.get(0) : output);
+        return output;
     }
 
 

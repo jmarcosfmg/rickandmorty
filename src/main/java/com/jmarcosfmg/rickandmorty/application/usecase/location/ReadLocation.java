@@ -1,11 +1,13 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.location;
 
-import java.util.List;
-
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ReadLocation {
 
-    public List<ReadLocationOutput> execute(List<Integer> ids);
+    public Page<ReadLocationOutput> execute(List<Integer> ids, Pageable pageable);
 
 }

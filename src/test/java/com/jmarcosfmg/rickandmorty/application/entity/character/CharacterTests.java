@@ -1,8 +1,8 @@
 package com.jmarcosfmg.rickandmorty.application.entity.character;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class CharacterTests {
 

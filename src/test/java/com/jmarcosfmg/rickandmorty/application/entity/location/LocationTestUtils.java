@@ -1,8 +1,8 @@
 package com.jmarcosfmg.rickandmorty.application.entity.location;
 
-import java.util.ArrayList;
-
 import com.jmarcosfmg.rickandmorty.application.utils.DateUtils;
+
+import java.util.ArrayList;
 
 public class LocationTestUtils {
 

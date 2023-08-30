@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CharacterTests {
 
-    private Character character = CharacterTestUtils.getMorty();
+    private final Character character = CharacterTestUtils.getMorty();
 
     @Test
     void shouldUpdateOnlyLocationAndStatus(){

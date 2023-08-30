@@ -1,6 +1,6 @@
 package com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public record LocationInfoResponse (
@@ -8,7 +8,7 @@ public record LocationInfoResponse (
     String name,
     String dimension,
     List<Integer> residents,
-    Date creationDate,
+    LocalDate creationDate,
     String url
 ){
 

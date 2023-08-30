@@ -1,7 +1,7 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.character;
 
-import com.jmarcosfmg.rickandmorty.application.entity.character.Character;
-import com.jmarcosfmg.rickandmorty.application.entity.character.CharacterRepository;
+import com.jmarcosfmg.rickandmorty.domain.character.Character;
+import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CharacterMapper;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;

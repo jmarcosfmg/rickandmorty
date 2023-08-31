@@ -79,7 +79,7 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
     public void deleteCharacter(List<Integer> id) {
         log.info("Deleting Character(s) from database - id=[{}]", id);
 
-        repository.deleteAllById(id);
+        repository.deleteAllByIdInBatch(id);
         log.info("Successfully deleted Character(s) from database - id=[{}]", id);
     }
 

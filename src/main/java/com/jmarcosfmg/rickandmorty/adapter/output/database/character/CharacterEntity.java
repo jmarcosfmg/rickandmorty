@@ -29,6 +29,8 @@ public class CharacterEntity {
 
     String gender;
 
+    String status;
+
     @ManyToOne
     LocationEntity origin;
 

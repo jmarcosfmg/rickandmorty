@@ -8,7 +8,7 @@ public enum Gender {
     UNKNOWN;
 
     public static Gender parse(String gender) {
-        return Gender.valueOf((gender != null)? gender.strip().toUpperCase() : "NULL");
+        return Gender.valueOf((gender != null) ? gender.strip().toUpperCase() : "NULL");
     }
-    
+
 }

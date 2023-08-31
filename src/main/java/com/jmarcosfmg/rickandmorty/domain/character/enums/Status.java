@@ -7,7 +7,7 @@ public enum Status {
     UNKNOWN;
 
     public static Status parse(String status) {
-        return Status.valueOf((status != null)? status.strip().toUpperCase() : "NULL");
+        return Status.valueOf((status != null) ? status.strip().toUpperCase() : "NULL");
     }
 
 }

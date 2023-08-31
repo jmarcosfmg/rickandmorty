@@ -1,6 +1,6 @@
 package com.jmarcosfmg.rickandmorty.adapter.input.controller.location;
 
-import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter.ControllerMapper;
+import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.converter.LocationControllerMapper;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.CreateLocationRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.LocationInfoResponse;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.location.dto.UpdateLocationRequest;
@@ -12,6 +12,7 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocati
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,15 +43,14 @@ public class LocationController extends LogUtils {
     @Autowired
     private ReadLocation readLocationUseCase;
 
-    @Autowired
-    private ControllerMapper mapper;
-    
+    private LocationControllerMapper mapper = Mappers.getMapper(LocationControllerMapper.class);
+
     @PostMapping
-    public LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request){
+    public LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request) {
         log.info("Starting to process a create location request - {}", request);
 
         CreateLocationOutput output = createLocationUseCase.execute(this.mapper.toInput(request));
-        
+
         log.info("Finished processing a create location request - {}", request);
 
         return addSelfUrl(this.mapper.toResponse(output));
@@ -59,18 +59,18 @@ public class LocationController extends LogUtils {
     @PutMapping
     public ResponseEntity<?> updateLocation(@Valid @RequestBody @Size(min = 1) List<UpdateLocationRequest> request) {
         log.info("Starting to process an update location request - {}", request);
-    
+
         List<LocationInfoResponse> output = updateLocationUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
                 .parallelStream().map(o -> this.addSelfUrl(this.mapper.toResponse(o))).toList();
 
         log.info("Finished processing an update location request - {}", request);
-        return ResponseEntity.ok().body((output.size() == 1)? output.get(0) : output);
+        return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
-    
+
     @GetMapping
     public Page<LocationInfoResponse> getLocation(
             @RequestParam(required = false) List<Integer> id,
-        @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+            @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
         log.info("Starting to process a get location request - {}", id);
 
@@ -83,9 +83,9 @@ public class LocationController extends LogUtils {
 
 
     @DeleteMapping("/{ids}")
-    public void deleteLocation(@PathVariable(required = true) @Size(min = 1) List<Integer> ids){     
+    public void deleteLocation(@PathVariable(required = true) @Size(min = 1) List<Integer> ids) {
         log.info("Starting to process a delete location request - {}", ids);
-    
+
         deleteLocationUseCase.execute(ids);
         log.info("Finished processing a delete location request - {}", ids);
     }

@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "52fa2ac6-e389-474d-98f2-1864e217c754",
+		"name": "Rick and Morty",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Create Location",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Earth\",\r\n    \"dimension\": \"C-137\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/location",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Location",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/location/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location",
+								"1"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Location",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"name\": \"Earth\",\r\n        \"dimension\": \"C-138\",\r\n        \"residents\": [1],\r\n        \"creationDate\": null,\r\n        \"url\": null\r\n    },\r\n    {\r\n        \"id\": 4,\r\n        \"name\": \"Earth 4\",\r\n        \"dimension\": \"487\",\r\n        \"residents\": [],\r\n        \"creationDate\": null,\r\n        \"url\": null\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/location",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Character",
+			"item": [
+				{
+					"name": "Create Character",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Earth\",\r\n    \"dimension\": \"C-137\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/character",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"character"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Character",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/character",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"character"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Character",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/character/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"character",
+								"1"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Character",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 1,\r\n            \"name\": \"rick\",\r\n            \"status\": null,\r\n            \"species\": \"human\",\r\n            \"gender\": \"MALE\",\r\n            \"origin\": {\r\n                \"name\": \"Earth 2\",\r\n                \"url\": \"http://localhost:8080/location?id=1\"\r\n            },\r\n            \"location\": {\r\n                \"name\": \"Earth 2\",\r\n                \"url\": \"http://localhost:8080/location?id=1\"\r\n            },\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/character",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"character"
+							]
+						},
+						"description": "Create Location resource"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

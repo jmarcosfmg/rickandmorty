@@ -1,7 +1,9 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character;
 
+import java.util.List;
+
 public interface DeleteCharacter {
 
-    public void execute(Integer... id);
-    
+    public void execute(List<Integer> id);
+
 }

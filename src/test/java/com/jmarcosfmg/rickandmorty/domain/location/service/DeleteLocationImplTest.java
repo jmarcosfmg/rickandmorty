@@ -1,8 +1,7 @@
 package com.jmarcosfmg.rickandmorty.domain.location.service;
 
-import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.application.exception.DatabaseIntegrationException;
-import com.jmarcosfmg.rickandmorty.domain.location.service.DeleteLocationImpl;
+import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,14 +20,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DeleteLocationImplTest {
 
+    private final List<Integer> ids = List.of(1, 2, 3);
     @Mock
     private LocationRepository repository;
-
     @Autowired
     @InjectMocks
     private DeleteLocationImpl service;
-
-    private final List<Integer> ids = List.of(1, 2, 3);
 
     @Test
     void shouldDeleteAllLocations() {

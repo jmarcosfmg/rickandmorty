@@ -1,16 +1,17 @@
 package com.jmarcosfmg.rickandmorty.application.usecase.character.dto;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public record CreateCharacterOutput(
-    Integer id,
-    String name,
-    String status,
-    String species,
-    String gender,
-    Integer origin,
-    Integer location,
-    Date creationDate
+        Integer id,
+        String name,
+        String status,
+        String species,
+        String gender,
+        CharacterLocationOutput origin,
+        CharacterLocationOutput location,
+        LocalDate creationDate
 ) {
-    
+
 }

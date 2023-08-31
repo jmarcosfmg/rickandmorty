@@ -1,6 +1,6 @@
 name: Java Run tests
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:

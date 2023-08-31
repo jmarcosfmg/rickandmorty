@@ -30,8 +30,8 @@ public class LocationEntity {
 
     private String dimension;
 
-    @OneToMany
-    private List<CharacterEntity> residents;    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", orphanRemoval = false)
+    private List<CharacterEntity> residents;
 
     @CreatedDate
     private LocalDate creationDate = ZonedDateTime.now(ZoneId.of(Constants.TIMEZONE)).toLocalDate();

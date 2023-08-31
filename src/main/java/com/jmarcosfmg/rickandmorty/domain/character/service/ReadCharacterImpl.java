@@ -1,11 +1,15 @@
 package com.jmarcosfmg.rickandmorty.domain.character.service;
 
-import com.jmarcosfmg.rickandmorty.domain.character.Character;
-import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.ReadCharacter;
+import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CharacterMapper;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.ReadCharacterOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import com.jmarcosfmg.rickandmorty.domain.character.Character;
+import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,40 +17,30 @@ import java.util.List;
 @Service
 public class ReadCharacterImpl extends LogUtils implements ReadCharacter {
 
+    private static final CharacterMapper mapper = Mappers.getMapper(CharacterMapper.class);
     @Autowired
     private CharacterRepository repository;
 
     @Override
-    public List<ReadCharacterOutput> execute(List<Integer> id){
-        log.info("Starting to read characters - {} ", id);
+    public Page<ReadCharacterOutput> execute(List<Integer> id, Pageable pageable) {
 
-       List<Character> characters = this.getCharacters(id);
+        log.info("Starting to read characters - {}", id);
 
-        log.info("Successfully read {} characters - {}", characters.size(), id);
-       return characters.stream().parallel().map(this::toReadCharacterOutput).toList();
+
+        Page<Character> response = (id.isEmpty()) ? repository.getCharacters(pageable) : repository.getCharacters(id, pageable);
+
+        log.info("Successfully read {0} characters - {}", response.getSize(), id);
+
+        return response.map(mapper::toReadCharacterOutput);
     }
 
-    
-    protected List<Character> getCharacters(List<Integer> id){
+
+    protected List<Character> getCharacters(List<Integer> id) {
         log.info("Fetching characters on database - {}", id);
 
         List<Character> response = repository.getCharacters(id);
 
         log.info("Successfully fetched {} characters - {}", response.size(), id);
         return response;
-    }   
-
-    private ReadCharacterOutput toReadCharacterOutput(Character character){
-
-        return new ReadCharacterOutput(
-            character.getId(),
-            character.getName(),
-            character.getStatus().name(),
-            character.getSpecies(),
-            character.getGender().name(),
-            character.getOrigin().getId(),
-            character.getLocation().getId(),
-            character.getCreatedAt()
-        );
     }
 }

@@ -1,10 +1,9 @@
 package com.jmarcosfmg.rickandmorty.domain.location.service;
 
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
-import com.jmarcosfmg.rickandmorty.domain.location.service.ReadLocationImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,7 +38,7 @@ public class ReadLocationImplTest {
     private Pageable pageable = Pageable.ofSize(2);
 
     @Test
-    public void shouldReturnAllRequiredLocations() {       
+    public void shouldReturnAllRequiredLocations() {
 
         when(repository.getLocationsById(List.of(earth.getId(), secondEarth.getId()), pageable)).thenReturn(locations);
 
@@ -62,8 +61,10 @@ public class ReadLocationImplTest {
     public void shouldParseExceptions() {
 
         when(repository.getLocationsById(List.of(earth.getId(), secondEarth.getId()), pageable)).thenReturn(locations);
-        
-        RuntimeException response = assertThrows(RuntimeException.class, () -> {service.execute(List.of(earth.getId()), pageable);}, "Should have returned exception");
+
+        RuntimeException response = assertThrows(RuntimeException.class, () -> {
+            service.execute(List.of(earth.getId()), pageable);
+        }, "Should have returned exception");
 
         assertTrue("Should explain exception", response.getMessage().contains("Location"));
     }

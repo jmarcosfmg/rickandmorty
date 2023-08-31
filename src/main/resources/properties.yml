@@ -1,5 +1,6 @@
 server:
   port: 8085
+  contextPath:
 
 spring:
   datasource:
@@ -9,6 +10,7 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate.ddl-auto: update
   defer-datasource-initialization: true
   h2:
     console:
@@ -18,7 +20,8 @@ spring:
         trace: false
         web-allow-others: false
 
+
 logging.level.org.springframework.web: DEBUG
-logging.level.org.hibernate: ERROR
+logging.level.org.hibernate: INFO
 
 logging.level.root: INFO

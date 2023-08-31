@@ -20,60 +20,76 @@ public class LocationTests {
     private Character otherMorty = CharacterTestUtils.getOtherMorty();
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         earth = LocationTestUtils.getEarth();
         earth.addResident(morty);
     }
 
     @Test
-    void shouldUpdateDimensionAndNameAndCharacters(){
+    void shouldUpdateDimensionAndNameAndCharacters() {
 
         Location updatedLocation = LocationTestUtils.getSecondEarth();
         updatedLocation.addResident(otherMorty);
-        
+
         Location response = earth.update(updatedLocation);
 
         assertAll(
-            () -> {assertEquals("Id should not have been updated", earth.getId(), response.getId());},
-            () -> {assertEquals("Created date should not have been updated", earth.getCreationDate(), response.getCreationDate());},
-            () -> {assertEquals("Name should have been updated", updatedLocation.getName(), response.getName());},
-            () -> {assertEquals("Dimension should have been updated", updatedLocation.getDimension(), response.getDimension());},
-            () -> {assertEquals("Residents list should not have been replaced", earth.getResidents(), response.getResidents());},
-            () -> {assertTrue("Characters should have been added to residents list", response.getResidents().contains(otherMorty));}
-        );   
+                () -> {
+                    assertEquals("Id should not have been updated", earth.getId(), response.getId());
+                },
+                () -> {
+                    assertEquals("Created date should not have been updated", earth.getCreationDate(), response.getCreationDate());
+                },
+                () -> {
+                    assertEquals("Name should have been updated", updatedLocation.getName(), response.getName());
+                },
+                () -> {
+                    assertEquals("Dimension should have been updated", updatedLocation.getDimension(), response.getDimension());
+                },
+                () -> {
+                    assertEquals("Residents list should not have been replaced", earth.getResidents(), response.getResidents());
+                },
+                () -> {
+                    assertTrue("Characters should have been added to residents list", response.getResidents().contains(otherMorty));
+                }
+        );
     }
 
     @Test
-    void shouldRemoveCharactersFromResidentsListIfFound(){
+    void shouldRemoveCharactersFromResidentsListIfFound() {
 
         this.earth.removeResident(morty);
-        assertTrue("Character should not be a resident", !this.earth.getResidents().contains(morty));
+        assertTrue("Character should be in list", this.earth.getResidents().contains(morty));
+        assertTrue("Character should not be a resident", morty.getLocation() == null);
 
     }
 
     @Test
-    void shouldNotThrowExceptionWhenAskedToRemovedCharacterThatIsNotResident(){
+    void shouldNotThrowExceptionWhenAskedToRemovedCharacterThatIsNotResident() {
 
         List<Character> residentsToRemove = new ArrayList<Character>();
 
         residentsToRemove.add(morty);
         residentsToRemove.add(otherMorty);
-        
-        assertDoesNotThrow(() -> {this.earth.removeResident(residentsToRemove.toArray(Character[]::new));});
 
-        assertTrue("Should have removed residents on list", !this.earth.getResidents().contains(morty));
+        assertDoesNotThrow(() -> {
+            this.earth.removeResident(residentsToRemove.toArray(Character[]::new));
+        });
+
+        assertTrue("Should not have removed residents on list", this.earth.getResidents().contains(morty));
+        assertTrue("Should have removed location from character", morty.getLocation() == null);
     }
 
     @Test
-    void shouldAddCharacterToResidentsList(){
+    void shouldAddCharacterToResidentsList() {
 
         this.earth.addResident(otherMorty);
 
         assertTrue("Should have added resident", this.earth.getResidents().contains(otherMorty));
     }
-    
+
     @Test
-    void shouldNotAddRepeatedCharacterToResidentsList(){
+    void shouldNotAddRepeatedCharacterToResidentsList() {
 
         this.earth.addResident(morty);
 
@@ -81,11 +97,11 @@ public class LocationTests {
     }
 
     @Test
-    void shouldUpdateResidentsLocation(){
+    void shouldUpdateResidentsLocation() {
 
         this.earth.addResident(otherMorty);
 
-        this.earth.getResidents().forEach(c -> { 
+        this.earth.getResidents().forEach(c -> {
             assertEquals("Character location should have been updated", this.earth, c.getLocation());
         });
     }

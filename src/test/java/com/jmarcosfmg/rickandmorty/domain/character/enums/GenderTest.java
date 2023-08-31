@@ -18,12 +18,16 @@ public class GenderTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenGenderIsInvalid(){
-        
-        IllegalArgumentException ex1 = assertThrows(IllegalArgumentException.class, () -> {Gender.parse(null);});
+    public void shouldThrowIllegalArgumentExceptionWhenGenderIsInvalid() {
+
+        IllegalArgumentException ex1 = assertThrows(IllegalArgumentException.class, () -> {
+            Gender.parse(null);
+        });
         assertTrue(ex1.getMessage().contains("NULL"));
 
-        IllegalArgumentException ex2 = assertThrows(IllegalArgumentException.class, () -> {Gender.parse("no gender");});
+        IllegalArgumentException ex2 = assertThrows(IllegalArgumentException.class, () -> {
+            Gender.parse("no gender");
+        });
         assertTrue(ex2.getMessage().contains("NO GENDER"));
     }
 

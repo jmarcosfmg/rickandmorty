@@ -14,8 +14,8 @@ public interface LocationMapper {
 
     CreateLocationOutput toCreateLocationOutput(Location location);
 
-    default List<Integer> map(List<Character> residents){
+    default List<Integer> map(List<Character> residents) {
         return residents.stream().map(Character::getId).toList();
     }
-    
+
 }

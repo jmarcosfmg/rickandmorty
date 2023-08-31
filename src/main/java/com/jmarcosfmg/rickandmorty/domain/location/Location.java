@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,17 +30,19 @@ public class Location {
         this.id = id;
         this.name = name;
         this.dimension = dimension;
-        residents.forEach(r -> this.residents.put(r.getId(), r));
         this.creationDate = creationDate;
+        if (residents != null)
+            residents.forEach(r -> this.residents.put(r.getId(), r));
     }
 
-    public Location(String name, String dimension, List<Character> residents){
+    public Location(String name, String dimension, List<Character> residents) {
         this.name = name;
         this.dimension = dimension;
-        residents.forEach(r -> this.residents.put(r.getId(), r));
+        if (residents != null)
+            residents.forEach(r -> this.residents.put(r.getId(), r));
     }
 
-    public List<Character> getResidents(){
+    public List<Character> getResidents() {
         return List.copyOf(this.residents.values());
     }
 
@@ -49,40 +52,46 @@ public class Location {
         this.updateResidents(newResidents);
     }
 
-    public Location update(Location location){
+    public Location update(Location location) {
 
         if (location.dimension != null && !location.dimension.isBlank())
             this.dimension = location.dimension;
-            
+
         if (location.name != null && !location.name.isBlank())
             this.name = location.name;
-            
-        if (location.residents != null) 
-            this.setResidents(location.getResidents());        
-        
+
+        if (location.residents != null)
+            this.setResidents(location.getResidents());
+
         return this;
     }
-    
-    public void removeResident(Character... resident){
+
+    public void removeResident(Character... resident) {
         for (Character resident2 : resident) {
-            if(this.residents.containsKey(resident2.getId())){
+            if (this.residents.containsKey(resident2.getId())) {
                 resident2.setLocation(null);
-                this.residents.remove(resident2.getId(), resident2);
             }
-      }
+        }
     }
 
-    public void addResident(Character... resident){
-      for (Character resident2 : resident) {
-        resident2.setLocation(this);
-        this.residents.put(resident2.getId(), resident2);
-      }
+    public void addResident(Character... resident) {
+        for (Character resident2 : resident) {
+            resident2.setLocation(this);
+            this.residents.put(resident2.getId(), resident2);
+        }
     }
 
-    private void updateResidents(Map<Integer, Character> newResidents){
-        this.residents.forEach((i, c) -> { if(!newResidents.containsKey(i)) c.setLocation(null);});
+    private void updateResidents(Map<Integer, Character> newResidents) {
+        if (this.residents == null)
+            this.residents = Collections.emptyMap();
+
         newResidents.forEach((i, c) -> c.setLocation(this));
-        this.residents = newResidents;
+
+        this.residents.forEach((i, c) -> {
+            if (!newResidents.containsKey(i)) c.setLocation(null);
+        });
+
+        this.residents.putAll(newResidents);
     }
 
     @Override

@@ -8,7 +8,7 @@ A aplicação simula uma API que permite o CRUD de personagens e suas respectiva
 
 * Um personagem pode ter todos os seus campos alterados, menos a data de criação e id;
 
-* Uma localidade pode ser alterada para remover os personagens associados a ela;
+* Uma localidade pode ter todos os seus campos alterados, menos a data de criação e id;
 
 * Uma localidade só poderá ser removida quando não houver personagens associados a ela;
 
@@ -50,4 +50,5 @@ DELETE  | "/ { id }"     | Remove uma ou mais personagens
 
 ### Exemplos de requisições:
 
-Utilizar a collection do Postman em 
+Utilizar a collection do Postman em [resources](https://github.com/jmarcosfmg/rickandmorty/tree/develop/resources)
+

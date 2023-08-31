@@ -1,9 +1,9 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.character;
 
+import com.jmarcosfmg.rickandmorty.application.exception.NotFoundException;
+import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import com.jmarcosfmg.rickandmorty.domain.character.Character;
 import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
-import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CharacterMapper;
-import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,13 +19,16 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
 
     @Autowired
     private CharacterEntityMapper mapper;
- 
+
     @Override
     public List<Character> getCharacters(List<Integer> id) {
         log.info("Fetching Character filtered by id from database - {}", id);
-        
+
         List<CharacterEntity> results = repository.findAllByIdIn(id);
-        
+
+        if (id.size() != results.size()) {
+            throw new NotFoundException("Could not find Character(s) with id(s) " + id.removeAll(results.stream().map(CharacterEntity::getId).toList()));
+        }
         log.info("Successfully fetched Character  filtered by id from database - {}", id);
         return results.parallelStream().map(character -> mapper.toCharacter(character)).toList();
     }
@@ -46,7 +49,7 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
 
         Page<CharacterEntity> results = repository.findAll(pageable);
 
-        log.info("Successfully fetched Character page {}",pageable);
+        log.info("Successfully fetched Character page {}", pageable);
         return results.map(mapper::toCharacter);
     }
 
@@ -56,8 +59,8 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
 
         List<Character> entities = repository.saveAll(
                 character.parallelStream().map(mapper::toEntity).toList()
-            ).parallelStream().map(mapper::toCharacter).toList();
-        
+        ).parallelStream().map(mapper::toCharacter).toList();
+
         log.info("Successfully updated database Character - {}", entities);
         return entities;
     }

@@ -17,10 +17,9 @@ import java.util.List;
 @Service
 public class ReadCharacterImpl extends LogUtils implements ReadCharacter {
 
+    private static final CharacterMapper mapper = Mappers.getMapper(CharacterMapper.class);
     @Autowired
     private CharacterRepository repository;
-
-    private static final CharacterMapper mapper = Mappers.getMapper(CharacterMapper.class);
 
     @Override
     public Page<ReadCharacterOutput> execute(List<Integer> id, Pageable pageable) {
@@ -36,7 +35,7 @@ public class ReadCharacterImpl extends LogUtils implements ReadCharacter {
     }
 
 
-    protected List<Character> getCharacters(List<Integer> id){
+    protected List<Character> getCharacters(List<Integer> id) {
         log.info("Fetching characters on database - {}", id);
 
         List<Character> response = repository.getCharacters(id);

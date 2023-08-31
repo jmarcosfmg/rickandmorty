@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatusTest {
 
-        @Test
+    @Test
     public void shouldGetStatus() {
 
         assertEquals(Status.ALIVE, Status.parse("ALIVE"));
@@ -15,12 +15,16 @@ public class StatusTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenStatusIsInvalid(){
-        
-        IllegalArgumentException ex1 = assertThrows(IllegalArgumentException.class, () -> {Status.parse(null);});
+    public void shouldThrowIllegalArgumentExceptionWhenStatusIsInvalid() {
+
+        IllegalArgumentException ex1 = assertThrows(IllegalArgumentException.class, () -> {
+            Status.parse(null);
+        });
         assertTrue(ex1.getMessage().contains("NULL"));
 
-        IllegalArgumentException ex2 = assertThrows(IllegalArgumentException.class, () -> {Status.parse("no status");});
+        IllegalArgumentException ex2 = assertThrows(IllegalArgumentException.class, () -> {
+            Status.parse("no status");
+        });
         assertTrue(ex2.getMessage().contains("NO STATUS"));
     }
 }

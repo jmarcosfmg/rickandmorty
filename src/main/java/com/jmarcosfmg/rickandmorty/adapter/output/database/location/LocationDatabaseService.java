@@ -1,9 +1,12 @@
 package com.jmarcosfmg.rickandmorty.adapter.output.database.location;
 
+import com.jmarcosfmg.rickandmorty.application.exception.DatabaseIntegrationException;
+import com.jmarcosfmg.rickandmorty.application.exception.NotFoundException;
+import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
-import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -22,9 +25,9 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
     @Override
     public Page<Location> getLocationsById(List<Integer> id, Pageable pageable) {
         log.info("Fetching Location filtered by id from database - {}", id, pageable);
-        
+
         Page<LocationEntity> results = repository.findAllByIdIn(id, pageable);
-        
+
         log.info("Successfully fetched Location  filtered by id from database - {}", id, pageable);
         return results.map(location -> mapper.toLocation(location));
     }
@@ -35,17 +38,20 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
 
         List<LocationEntity> results = repository.findAllByIdIn(id);
 
+        if (id.size() != results.size()) {
+            throw new NotFoundException("Could not find Location(s) with id(s) " + id.removeAll(results.stream().map(LocationEntity::getId).toList()));
+        }
         log.info("Successfully fetched Location filtered by id from database - {}", id);
         return results.stream().map(location -> mapper.toLocation(location)).toList();
     }
-    
+
 
     @Override
     public Page<Location> getLocations(Pageable pageable) {
         log.info("Fetching locations from database - {}", pageable);
-        
+
         Page<LocationEntity> results = repository.findAll(pageable);
-        
+
         log.info("Successfully fetched locations from database - {}", pageable);
         return results.map(location -> mapper.toLocation(location));
     }
@@ -56,8 +62,8 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
 
         List<Location> entities = repository.saveAll(
                 location.parallelStream().map(l -> mapper.toEntity(l)).toList()
-            ).parallelStream().map(entity -> mapper.toLocation(entity)).toList();
-        
+        ).parallelStream().map(entity -> mapper.toLocation(entity)).toList();
+
         log.info("Successfully updated database Location - {}", entities);
         return entities;
     }
@@ -75,8 +81,11 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
     @Override
     public void deleteLocation(List<Integer> id) {
         log.info("Deleting Location from database - {}", id);
-
-        repository.deleteAllById(id);
+        try {
+            repository.deleteAllByIdInBatch(id);
+        } catch (DataIntegrityViolationException d) {
+            throw new DatabaseIntegrationException("One or more locations have associated Characters. Unable to delete: " + d.getMessage());
+        }
         log.info("Successfully deleted Location from database - {}", id);
     }
 

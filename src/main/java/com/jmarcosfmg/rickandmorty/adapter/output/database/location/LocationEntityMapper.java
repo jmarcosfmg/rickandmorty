@@ -13,5 +13,5 @@ public interface LocationEntityMapper {
     Location toLocation(LocationEntity entity);
 
     LocationEntity toEntity(Location location);
-    
+
 }

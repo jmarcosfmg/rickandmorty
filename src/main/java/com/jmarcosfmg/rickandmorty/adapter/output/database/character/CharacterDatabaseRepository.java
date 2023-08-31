@@ -9,6 +9,7 @@ import java.util.List;
 public interface CharacterDatabaseRepository extends JpaRepository<CharacterEntity, Integer> {
 
     Page<CharacterEntity> findAllByIdIn(List<Integer> id, Pageable pageable);
+
     List<CharacterEntity> findAllByIdIn(List<Integer> id);
 
 }

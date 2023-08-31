@@ -1,14 +1,13 @@
 package com.jmarcosfmg.rickandmorty.domain.location.service;
 
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationInput;
+import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
 import com.jmarcosfmg.rickandmorty.domain.character.Character;
 import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
 import com.jmarcosfmg.rickandmorty.domain.character.CharacterTestUtils;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationInput;
-import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
-import com.jmarcosfmg.rickandmorty.domain.location.service.CreateLocationImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

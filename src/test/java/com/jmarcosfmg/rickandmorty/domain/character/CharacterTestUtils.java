@@ -1,10 +1,10 @@
 package com.jmarcosfmg.rickandmorty.domain.character;
 
+import com.jmarcosfmg.rickandmorty.application.utils.DateUtils;
 import com.jmarcosfmg.rickandmorty.domain.character.enums.Gender;
 import com.jmarcosfmg.rickandmorty.domain.character.enums.Status;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
-import com.jmarcosfmg.rickandmorty.application.utils.DateUtils;
 
 public class CharacterTestUtils {
 

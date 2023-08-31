@@ -19,6 +19,6 @@ public record UpdateCharacterRequest(
         @NotBlank
         String gender,
         Integer location
-){
+) {
 
 }

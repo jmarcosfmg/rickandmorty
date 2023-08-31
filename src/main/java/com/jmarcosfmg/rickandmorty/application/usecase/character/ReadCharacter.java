@@ -9,5 +9,5 @@ import java.util.List;
 public interface ReadCharacter {
 
     Page<ReadCharacterOutput> execute(List<Integer> ids, Pageable pageable);
-    
+
 }

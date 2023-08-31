@@ -2,8 +2,8 @@ package com.jmarcosfmg.rickandmorty.adapter.input.controller.character;
 
 
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.character.converter.CharacterControllerMapper;
-import com.jmarcosfmg.rickandmorty.adapter.input.controller.character.dto.CreateCharacterRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.character.dto.CharacterInfoResponse;
+import com.jmarcosfmg.rickandmorty.adapter.input.controller.character.dto.CreateCharacterRequest;
 import com.jmarcosfmg.rickandmorty.adapter.input.controller.character.dto.UpdateCharacterRequest;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.CreateCharacter;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.DeleteCharacter;
@@ -47,7 +47,7 @@ public class CharacterController extends LogUtils {
     private CharacterControllerMapper mapper;
 
     @PostMapping
-    public CharacterInfoResponse createCharacter(@Valid @RequestBody CreateCharacterRequest request){
+    public CharacterInfoResponse createCharacter(@Valid @RequestBody CreateCharacterRequest request) {
         log.info("Starting to process a create character request - {}", request);
 
         CreateCharacterOutput output = createCharacterUseCase.execute(this.mapper.toInput(request));
@@ -65,7 +65,7 @@ public class CharacterController extends LogUtils {
                 .parallelStream().map(o -> this.addSelfUrl(this.mapper.toResponse(o))).toList();
 
         log.info("Finished processing an update character request - {}", request);
-        return ResponseEntity.ok().body((output.size() == 1)? output.get(0) : output);
+        return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
 
     @GetMapping
@@ -84,7 +84,7 @@ public class CharacterController extends LogUtils {
 
 
     @DeleteMapping("/{ids}")
-    public void deleteCharacter(@PathVariable(required = true) @Size(min = 1) List<Integer> ids){
+    public void deleteCharacter(@PathVariable(required = true) @Size(min = 1) List<Integer> ids) {
         log.info("Starting to process a delete character request - {}", ids);
 
         deleteCharacterUseCase.execute(ids);

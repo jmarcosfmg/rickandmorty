@@ -17,6 +17,6 @@ public interface CharacterRepository {
 
     Character createCharacter(Character character);
 
-    void deleteCharacter(List<Integer> id);  
-    
+    void deleteCharacter(List<Integer> id);
+
 }

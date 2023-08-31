@@ -1,15 +1,15 @@
 package com.jmarcosfmg.rickandmorty.domain.location.service;
 
-import com.jmarcosfmg.rickandmorty.domain.character.Character;
-import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
-import com.jmarcosfmg.rickandmorty.domain.location.Location;
-import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.application.exception.NotFoundException;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.CreateLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationInput;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.CreateLocationOutput;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.LocationMapper;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
+import com.jmarcosfmg.rickandmorty.domain.character.Character;
+import com.jmarcosfmg.rickandmorty.domain.character.CharacterRepository;
+import com.jmarcosfmg.rickandmorty.domain.location.Location;
+import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,20 +20,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class CreateLocationImpl extends LogUtils implements CreateLocation{
-
-    @Autowired
-    LocationRepository locationRepository;
+public class CreateLocationImpl extends LogUtils implements CreateLocation {
 
     private final LocationMapper mapper = Mappers.getMapper(LocationMapper.class);
+    @Autowired
+    LocationRepository locationRepository;
     @Autowired
     CharacterRepository characterRepository;
 
     public CreateLocationOutput execute(CreateLocationInput createLocationInput) {
 
         log.info("Starting location creation - {}", createLocationInput);
-        
-        List<Character> residents = (createLocationInput.residents() == null)?
+
+        List<Character> residents = (createLocationInput.residents() == null) ?
                 new ArrayList<>() : characterRepository.getCharacters(createLocationInput.residents());
 
         verifyCharactersExistence(residents, createLocationInput);

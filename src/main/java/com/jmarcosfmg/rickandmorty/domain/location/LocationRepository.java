@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface LocationRepository {
 
-    Page<Location> getLocationsById(List<Integer> id, Pageable pageable); 
+    Page<Location> getLocationsById(List<Integer> id, Pageable pageable);
 
-    List<Location> getLocationsById(List<Integer> id); 
-    
-    Page<Location> getLocations(Pageable pageable); 
+    List<Location> getLocationsById(List<Integer> id);
+
+    Page<Location> getLocations(Pageable pageable);
 
     List<Location> updateLocation(List<Location> location);
-    
+
     Location createLocation(Location location);
 
-    void deleteLocation(List<Integer> id);    
+    void deleteLocation(List<Integer> id);
 }

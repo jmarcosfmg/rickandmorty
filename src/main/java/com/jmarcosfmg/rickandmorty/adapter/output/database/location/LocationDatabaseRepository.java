@@ -12,6 +12,5 @@ public interface LocationDatabaseRepository extends JpaRepository<LocationEntity
 
     List<LocationEntity> findAllByIdIn(List<Integer> id);
 
-    
 
 }

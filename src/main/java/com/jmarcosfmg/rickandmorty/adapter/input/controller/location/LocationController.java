@@ -27,9 +27,10 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+
 @RestController
 @RequestMapping("/location")
-public class LocationController extends LogUtils {
+public class LocationController extends LogUtils implements LocationAPI {
 
     @Autowired
     private CreateLocation createLocationUseCase;
@@ -45,7 +46,7 @@ public class LocationController extends LogUtils {
 
     private LocationControllerMapper mapper = Mappers.getMapper(LocationControllerMapper.class);
 
-    @PostMapping
+    @Override
     public LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request) {
         log.info("Starting to process a create location request - {}", request);
 
@@ -56,8 +57,8 @@ public class LocationController extends LogUtils {
         return addSelfUrl(this.mapper.toResponse(output));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateLocation(@Valid @RequestBody @Size(min = 1) List<UpdateLocationRequest> request) {
+    @Override
+    public ResponseEntity<?> updateLocation(List<UpdateLocationRequest> request) {
         log.info("Starting to process an update location request - {}", request);
 
         List<LocationInfoResponse> output = updateLocationUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
@@ -67,10 +68,8 @@ public class LocationController extends LogUtils {
         return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
 
-    @GetMapping
-    public Page<LocationInfoResponse> getLocation(
-            @RequestParam(required = false) List<Integer> id,
-            @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    @Override
+    public Page<LocationInfoResponse> getLocation(List<Integer> id, Pageable pageable) {
 
         log.info("Starting to process a get location request - {}", id);
 
@@ -82,8 +81,8 @@ public class LocationController extends LogUtils {
     }
 
 
-    @DeleteMapping("/{ids}")
-    public void deleteLocation(@PathVariable(required = true) @Size(min = 1) List<Integer> ids) {
+    @Override
+    public void deleteLocation(List<Integer> ids) {
         log.info("Starting to process a delete location request - {}", ids);
 
         deleteLocationUseCase.execute(ids);

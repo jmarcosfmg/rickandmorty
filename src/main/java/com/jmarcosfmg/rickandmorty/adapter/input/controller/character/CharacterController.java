@@ -11,16 +11,12 @@ import com.jmarcosfmg.rickandmorty.application.usecase.character.ReadCharacter;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.UpdateCharacter;
 import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CreateCharacterOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -29,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/character")
-public class CharacterController extends LogUtils {
+public class CharacterController extends LogUtils implements CharacterAPI {
 
     @Autowired
     private CreateCharacter createCharacterUseCase;
@@ -46,8 +42,8 @@ public class CharacterController extends LogUtils {
     @Autowired
     private CharacterControllerMapper mapper;
 
-    @PostMapping
-    public CharacterInfoResponse createCharacter(@Valid @RequestBody CreateCharacterRequest request) {
+    @Override
+    public CharacterInfoResponse createCharacter(CreateCharacterRequest request) {
         log.info("Starting to process a create character request - {}", request);
 
         CreateCharacterOutput output = createCharacterUseCase.execute(this.mapper.toInput(request));
@@ -57,8 +53,8 @@ public class CharacterController extends LogUtils {
         return addSelfUrl(this.mapper.toResponse(output));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateCharacter(@Valid @RequestBody @Size(min = 1) List<UpdateCharacterRequest> request) {
+    @Override
+    public ResponseEntity<?> updateCharacter(List<UpdateCharacterRequest> request) {
         log.info("Starting to process an update character request - {}", request);
 
         List<CharacterInfoResponse> output = updateCharacterUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
@@ -68,10 +64,8 @@ public class CharacterController extends LogUtils {
         return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
 
-    @GetMapping
-    public Page<CharacterInfoResponse> getCharacter(
-            @RequestParam(required = false) List<Integer> id,
-            @PageableDefault(page = 0, size = 20) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    @Override
+    public Page<CharacterInfoResponse> getCharacter(List<Integer> id, Pageable pageable) {
 
         log.info("Starting to process a get character request - {}", id);
 
@@ -83,8 +77,8 @@ public class CharacterController extends LogUtils {
     }
 
 
-    @DeleteMapping("/{ids}")
-    public void deleteCharacter(@PathVariable(required = true) @Size(min = 1) List<Integer> ids) {
+    @Override
+    public void deleteCharacter(List<Integer> ids) {
         log.info("Starting to process a delete character request - {}", ids);
 
         deleteCharacterUseCase.execute(ids);

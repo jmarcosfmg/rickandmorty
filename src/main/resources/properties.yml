@@ -17,11 +17,17 @@ spring:
       enabled: true
       path: /h2-console
       settings:
-        trace: false
+        trace: true
         web-allow-others: false
 
+springdoc:
+  api-docs:
+    path: /api-docs
 
-logging.level.org.springframework.web: DEBUG
-logging.level.org.hibernate: INFO
+logging.level:
+  level.*: DEBUG
+  org:
+    springframework.web: DEBUG
+    hibernate: DEBUG
 
-logging.level.root: INFO
+#logging.level.root: INFO

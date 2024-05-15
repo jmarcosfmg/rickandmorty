@@ -27,7 +27,7 @@ public interface LocationControllerMapper {
 
     default List<String> map(List<Integer> residents) {
         return residents.stream().map(
-                c -> linkTo(methodOn(CharacterController.class).getCharacter(List.of(c), null))
+                c -> linkTo(methodOn(CharacterController.class).getCharacter(List.of(c), null, null, null, null))
                         .toString()
         ).toList();
     }

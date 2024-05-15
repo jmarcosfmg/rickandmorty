@@ -28,7 +28,7 @@ public class LocationDatabaseService extends LogUtils implements LocationReposit
 
         Page<LocationEntity> results = repository.findAllByIdIn(id, pageable);
 
-        log.info("Successfully fetched Location  filtered by id from database - {}", id, pageable);
+        log.info("Successfully fetched Location filtered by id from database - {}", id, pageable);
         return results.map(location -> mapper.toLocation(location));
     }
 

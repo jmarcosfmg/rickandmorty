@@ -13,7 +13,9 @@ import com.jmarcosfmg.rickandmorty.application.usecase.character.dto.CreateChara
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,7 +52,7 @@ public class CharacterController extends LogUtils implements CharacterAPI {
 
         log.info("Finished processing a create character request - {}", request);
 
-        return addSelfUrl(this.mapper.toResponse(output));
+        return this.mapper.toResponse(output);
     }
 
     @Override
@@ -58,19 +60,25 @@ public class CharacterController extends LogUtils implements CharacterAPI {
         log.info("Starting to process an update character request - {}", request);
 
         List<CharacterInfoResponse> output = updateCharacterUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
-                .parallelStream().map(o -> this.addSelfUrl(this.mapper.toResponse(o))).toList();
+                .parallelStream().map(o -> this.mapper.toResponse(o)).toList();
 
         log.info("Finished processing an update character request - {}", request);
         return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
 
     @Override
-    public Page<CharacterInfoResponse> getCharacter(List<Integer> id, Pageable pageable) {
+    public Page<CharacterInfoResponse> getCharacter(List<Integer> id,
+                                                    Integer pageSize,
+                                                    Integer page,
+                                                    String[] sort,
+                                                    String direction) {
 
         log.info("Starting to process a get character request - {}", id);
 
-        Page<CharacterInfoResponse> output = readCharacterUseCase.execute((id == null) ? List.of() : id, pageable)
-                .map(o -> addSelfUrl(this.mapper.toResponse(o)));
+        Pageable pageRequest = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.fromString(direction), sort));
+
+        Page<CharacterInfoResponse> output = readCharacterUseCase.execute((id == null) ? List.of() : id, pageRequest)
+                .map(o -> this.mapper.toResponse(o));
 
         log.info("Finished processing a get character request - {}", id);
         return output;
@@ -87,7 +95,7 @@ public class CharacterController extends LogUtils implements CharacterAPI {
 
     private CharacterInfoResponse addSelfUrl(CharacterInfoResponse response) {
         response.setUrl(linkTo(methodOn(CharacterController.class)
-                .getCharacter(List.of(response.getId()), null)).toString());
+                .getCharacter(List.of(response.getId()), null, null, null, null)).toString());
         return response;
     }
 }

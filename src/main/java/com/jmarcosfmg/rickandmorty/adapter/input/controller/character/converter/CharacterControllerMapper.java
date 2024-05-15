@@ -31,7 +31,7 @@ public interface CharacterControllerMapper {
         if (location == null)
             return null;
         return new LocationResponse(location.name(),
-                linkTo(methodOn(LocationController.class).getLocation(List.of(location.id()), null)).toString());
+                linkTo(methodOn(LocationController.class).getLocation(List.of(location.id()), null, null, null, null)).toString());
     }
 
 }

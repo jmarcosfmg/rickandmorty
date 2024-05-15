@@ -4,6 +4,7 @@ import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocation
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -29,13 +28,13 @@ public class ReadLocationImplTest {
     @InjectMocks
     private ReadLocationImpl service;
 
-    private Location earth = LocationTestUtils.getEarth();
+    private final Location earth = LocationTestUtils.getEarth();
 
-    private Location secondEarth = LocationTestUtils.getEarth();
+    private final Location secondEarth = LocationTestUtils.getEarth();
 
-    private Page<Location> locations = new PageImpl<>(List.of(earth, secondEarth));
+    private final Page<Location> locations = new PageImpl<>(List.of(earth, secondEarth));
 
-    private Pageable pageable = Pageable.ofSize(2);
+    private final Pageable pageable = Pageable.ofSize(2);
 
     @Test
     public void shouldReturnAllRequiredLocations() {
@@ -44,7 +43,7 @@ public class ReadLocationImplTest {
 
         Page<ReadLocationOutput> response = service.execute(List.of(earth.getId(), secondEarth.getId()), pageable);
 
-        assertEquals("Should have returned both locations", locations.getSize(), response.getSize());
+        Assert.assertEquals("Should have returned both locations", locations.getSize(), response.getSize());
     }
 
     @Test
@@ -54,7 +53,7 @@ public class ReadLocationImplTest {
 
         Page<ReadLocationOutput> response = service.execute(List.of(earth.getId()), pageable);
 
-        assertEquals("Should have returned no location", 0, response.getSize());
+        Assert.assertEquals( "Should have returned no location", 0, response.getSize());
     }
 
     @Test
@@ -66,6 +65,6 @@ public class ReadLocationImplTest {
             service.execute(List.of(earth.getId()), pageable);
         }, "Should have returned exception");
 
-        assertTrue("Should explain exception", response.getMessage().contains("Location"));
+        Assert.assertTrue("Should explain exception", response.getMessage().contains("Location"));
     }
 }

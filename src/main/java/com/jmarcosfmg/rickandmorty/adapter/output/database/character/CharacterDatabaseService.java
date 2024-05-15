@@ -29,7 +29,7 @@ public class CharacterDatabaseService extends LogUtils implements CharacterRepos
         if (id.size() != results.size()) {
             throw new NotFoundException("Could not find Character(s) with id(s) " + id.removeAll(results.stream().map(CharacterEntity::getId).toList()));
         }
-        log.info("Successfully fetched Character  filtered by id from database - {}", id);
+        log.info("Successfully fetched Character filtered by id from database - {}", id);
         return results.parallelStream().map(character -> mapper.toCharacter(character)).toList();
     }
 

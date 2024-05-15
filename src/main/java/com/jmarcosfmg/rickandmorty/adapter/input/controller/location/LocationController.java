@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Size;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -48,50 +49,56 @@ public class LocationController extends LogUtils implements LocationAPI {
 
     @Override
     public LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request) {
-        log.info("Starting to process a create location request - {}", request);
+        log.info("Starting to process a CREATE location request - {}", request);
 
         CreateLocationOutput output = createLocationUseCase.execute(this.mapper.toInput(request));
 
-        log.info("Finished processing a create location request - {}", request);
+        log.info("Finished processing a CREATE location request - {}", request);
 
         return addSelfUrl(this.mapper.toResponse(output));
     }
 
     @Override
     public ResponseEntity<?> updateLocation(List<UpdateLocationRequest> request) {
-        log.info("Starting to process an update location request - {}", request);
+        log.info("Starting to process an UPDATE location request - {}", request);
 
         List<LocationInfoResponse> output = updateLocationUseCase.execute(request.stream().map(r -> this.mapper.toInput(r)).toList())
                 .parallelStream().map(o -> this.addSelfUrl(this.mapper.toResponse(o))).toList();
 
-        log.info("Finished processing an update location request - {}", request);
+        log.info("Finished processing an UPDATE location request - {}", request);
         return ResponseEntity.ok().body((output.size() == 1) ? output.get(0) : output);
     }
 
     @Override
-    public Page<LocationInfoResponse> getLocation(List<Integer> id, Pageable pageable) {
+    public Page<LocationInfoResponse> getLocation(List<Integer> id,
+                                                  Integer size,
+                                                  Integer page,
+                                                  String[] sort,
+                                                  String direction) {
 
-        log.info("Starting to process a get location request - {}", id);
+        log.info("Starting to process a GET location request - {}", id);
 
-        Page<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id, pageable)
+        Pageable pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sort));
+
+        Page<LocationInfoResponse> output = readLocationUseCase.execute((id == null) ? List.of() : id, pageRequest)
                 .map(o -> addSelfUrl(this.mapper.toResponse(o)));
 
-        log.info("Finished processing a get location request - {}", id);
+        log.info("Finished processing a GET location request - {}", id);
         return output;
     }
 
 
     @Override
     public void deleteLocation(List<Integer> ids) {
-        log.info("Starting to process a delete location request - {}", ids);
+        log.info("Starting to process a DELETE location request - {}", ids);
 
         deleteLocationUseCase.execute(ids);
-        log.info("Finished processing a delete location request - {}", ids);
+        log.info("Finished processing a DELETE location request - {}", ids);
     }
 
     private LocationInfoResponse addSelfUrl(LocationInfoResponse response) {
         response.setUrl(linkTo(methodOn(LocationController.class)
-                .getLocation(List.of(response.getId()), null)).toString());
+                .getLocation(List.of(response.getId()), null, null, null, null)).toString());
         return response;
     }
 }

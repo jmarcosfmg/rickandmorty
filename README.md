@@ -50,4 +50,6 @@ DELETE  | "/ { id }"     | Remove uma ou mais personagens
 
 ### Exemplos de requisições:
 
-Utilizar a collection do Postman em 
+Utilizar a collection do Postman em [resources](https://github.com/jmarcosfmg/rickandmorty/tree/develop/resources)
+
+

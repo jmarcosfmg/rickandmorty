@@ -22,7 +22,7 @@ import java.util.List;
 
 public interface LocationAPI {
 
-    @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create a new location")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Returns the created location"),
@@ -31,7 +31,7 @@ public interface LocationAPI {
     })
     LocationInfoResponse createLocation(@Valid @RequestBody CreateLocationRequest request);
 
-    @PutMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update one or more locations")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns the created location"),
@@ -41,7 +41,7 @@ public interface LocationAPI {
     })
     ResponseEntity<?> updateLocation(@Valid @RequestBody @Size(min = 1) List<UpdateLocationRequest> request);
 
-    @GetMapping
+    @GetMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Retrieve one or more locations",
             parameters = {
                     @Parameter(name = "page", description = "Page number (if applicable)", hidden = true),
@@ -61,10 +61,14 @@ public interface LocationAPI {
     })
     Page<LocationInfoResponse> getLocation(
             @RequestParam(required = false) List<Integer> id,
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) @RequestBody(required = false) Pageable pageable);
+            @RequestParam(required = false, defaultValue = "10") Integer size,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "id") String[] sort,
+            @RequestParam(required = false, defaultValue = "asc") String direction
+    );
 
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping(path = "/{ids}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete one or more locations")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Locations were deleted"),

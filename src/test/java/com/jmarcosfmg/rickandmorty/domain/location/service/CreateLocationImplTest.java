@@ -8,6 +8,7 @@ import com.jmarcosfmg.rickandmorty.domain.character.CharacterTestUtils;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -53,13 +53,13 @@ public class CreateLocationImplTest {
 
         CreateLocationOutput response = service.execute(input);
 
-        assertNotNull("Id should not be null", response.id());
-        assertNotNull("Creation date should not be null", response.creationDate());
-        assertTrue("Created with different residents",
+        Assert.assertNotNull("Id should not be null", response.id());
+        Assert.assertNotNull("Creation date should not be null", response.creationDate());
+        Assert.assertTrue("Created with different residents",
                 earth.getResidents().stream().map(Character::getId).toList().containsAll(response.residents()));
 
-        assertEquals("Created with different dimension", earth.getDimension(), response.dimension());
-        assertEquals("Created with different name", earth.getName(), response.name());
+        Assert.assertEquals("Created with different dimension", earth.getDimension(), response.dimension());
+        Assert.assertEquals("Created with different name", earth.getName(), response.name());
     }
 }
 

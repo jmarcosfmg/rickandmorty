@@ -8,6 +8,7 @@ import com.jmarcosfmg.rickandmorty.domain.character.CharacterTestUtils;
 import com.jmarcosfmg.rickandmorty.domain.location.Location;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationRepository;
 import com.jmarcosfmg.rickandmorty.domain.location.LocationTestUtils;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,9 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -39,7 +37,7 @@ public class UpdateLocationImplTest {
     @Test
     public void shouldSkipWhenUpdateListIsEmpty() {
 
-        assertTrue("Returned list should be empty", service.execute(List.of()).isEmpty());
+        Assert.assertTrue("Returned list should be empty", service.execute(List.of()).isEmpty());
 
         verify(locationRepository, times(0)).getLocationsById(any());
         verify(locationRepository, times(0)).updateLocation(any());
@@ -53,7 +51,7 @@ public class UpdateLocationImplTest {
         NotFoundException response = assertThrows(NotFoundException.class, () -> service.execute(List.of(earthInput, secondEarthInput)));
 
         verify(locationRepository, times(0)).updateLocation(any());
-        assertTrue("Should return missing location id", response.getMessage().contains(String.valueOf(secondEarth.getId())));
+        Assert.assertTrue("Should return missing location id", response.getMessage().contains(String.valueOf(secondEarth.getId())));
 
     }
 
@@ -81,11 +79,11 @@ public class UpdateLocationImplTest {
         response.forEach(r -> {
             UpdateLocationInput locationInput = inputs.stream().filter(l -> l.id() == r.id()).findFirst().get();
             Location location = locations.stream().filter(l -> l.getId() == r.id()).findFirst().get();
-            assertEquals("Id should be equal", locationInput.id(), r.id());
-            assertEquals("Id should be equal", location.getCreationDate(), r.creationDate());
-            assertEquals("Id should be equal", locationInput.dimension(), r.dimension());
-            assertEquals("Id should be equal", locationInput.name(), r.name());
-            assertEquals("Id should be equal", locationInput.residents().size(), r.residents().size());
+            Assert.assertEquals( "Id should be equal", locationInput.id(), r.id());
+            Assert.assertEquals("Creation date should be equal", location.getCreationDate().toString(), r.creationDate().toString());
+            Assert.assertEquals( "Dimension should be equal", locationInput.dimension(), r.dimension());
+            Assert.assertEquals( "Name should be equal", locationInput.name(), r.name());
+            Assert.assertEquals("Residents should be equal", locationInput.residents().size(), r.residents().size());
         });
     }
 

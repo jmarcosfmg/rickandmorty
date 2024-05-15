@@ -1,5 +1,6 @@
 package com.jmarcosfmg.rickandmorty.domain.location.service;
 
+import com.jmarcosfmg.rickandmorty.application.exception.NotFoundException;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.ReadLocation;
 import com.jmarcosfmg.rickandmorty.application.usecase.location.dto.ReadLocationOutput;
 import com.jmarcosfmg.rickandmorty.application.utils.LogUtils;
@@ -24,10 +25,9 @@ public class ReadLocationImpl extends LogUtils implements ReadLocation {
 
         log.info("Starting to read locations - {}", id);
 
-
         Page<Location> response = (id.isEmpty()) ? repository.getLocations(pageable) : repository.getLocationsById(id, pageable);
 
-        log.info("Successfully read {} characters - {}", response.getSize(), id);
+        log.info("Successfully read {} locations - {}", response.getTotalElements(), id);
 
         return response.map(this::toReadLocationOutput);
     }

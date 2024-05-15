@@ -8,15 +8,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public interface CharacterAPI {
-    @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create a new character")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Retorna o personagem gerado"),
@@ -35,7 +34,7 @@ public interface CharacterAPI {
     })
     CharacterInfoResponse createCharacter(@Valid @RequestBody CreateCharacterRequest request);
 
-    @PutMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update an existing character")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna o personagem gerado",
@@ -50,9 +49,19 @@ public interface CharacterAPI {
     })
     ResponseEntity<?> updateCharacter(@Valid @RequestBody @Size(min = 1) List<UpdateCharacterRequest> request);
 
-    @GetMapping
+    @GetMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get a character or list multiple characters",
-            parameters = @Parameter(name = "id", description = "lista de ids", allowEmptyValue = true)
+            parameters = {
+                    @Parameter(name = "id", description = "lista de ids", allowEmptyValue = true),
+                    @Parameter(name = "page", description = "Page number (if applicable)", hidden = true),
+                    @Parameter(name = "size", description = "Number of elements in a page", hidden = true),
+                    @Parameter(name = "sort", description = "Character attribute used for sorting", hidden = true,
+                            examples = {
+                                    @ExampleObject("id"), @ExampleObject("name"),
+                                    @ExampleObject("dimension"), @ExampleObject("creationDate")}),
+                    @Parameter(name = "direction", description = "Direction used for sorting", hidden = true,
+                            examples = {@ExampleObject("asc"), @ExampleObject("desc")})
+            }
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna o personagem gerado"),
@@ -60,10 +69,14 @@ public interface CharacterAPI {
     })
     Page<CharacterInfoResponse> getCharacter(
             @RequestParam(required = false) List<Integer> id,
-            @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) @RequestBody(required = false) Pageable pageable);
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "id") String[] sort,
+            @RequestParam(required = false, defaultValue = "asc") String direction
+    );
 
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping(path = "/{ids}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete one or more characters",
             parameters = @Parameter(name = "ids", description = "lista de ids", allowEmptyValue = false)
     )
